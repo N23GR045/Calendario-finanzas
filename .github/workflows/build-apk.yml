@@ -1,0 +1,223 @@
+name: Generar APK
+
+# Se ejecuta solo cada vez que subes un cambio, y también a mano desde la pestaña Actions.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      # El servidor de GitHub ya trae el SDK de Android instalado: solo aceptamos las licencias.
+      - name: Preparar el SDK de Android
+        run: |
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          SDKM="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          if [ -x "$SDKM" ]; then yes | "$SDKM" --licenses > /dev/null || true; fi
+          ls "$ANDROID_HOME/platforms" || true
+
+      - name: Preparar el proyecto
+        run: |
+          test -f index.html || { echo "::error::Falta el archivo index.html en la raíz del repositorio"; exit 1; }
+          mkdir -p www && cp index.html www/index.html
+          cat > package.json <<'JSON'
+          {
+            "name": "mi-calendario",
+            "version": "1.0.0",
+            "private": true,
+            "dependencies": {
+              "@capacitor/android": "^8.0.0",
+              "@capacitor/app": "^8.0.0",
+              "@capacitor/core": "^8.0.0",
+              "@capacitor/local-notifications": "8.0.0"
+            },
+            "devDependencies": {
+              "@capacitor/cli": "^8.0.0"
+            }
+          }
+          JSON
+          cat > capacitor.config.json <<'JSON'
+          {
+            "appId": "com.micalendario.laboral",
+            "appName": "Mi Calendario",
+            "webDir": "www",
+            "plugins": { "LocalNotifications": { "iconColor": "#C42F2F", "smallIcon": "ic_stat_calendar" } }
+          }
+          JSON
+          npm install 2>&1 | tee -a "$GITHUB_WORKSPACE/log.txt"
+
+      - name: Crear la app de Android y añadir permisos de avisos
+        run: |
+          npx cap add android 2>&1 | tee -a "$GITHUB_WORKSPACE/log.txt"
+          cat > prepare-android.js <<'JS'
+          const fs = require('fs');
+          const f = 'android/app/src/main/AndroidManifest.xml';
+          let x = fs.readFileSync(f, 'utf8');
+          const perms = [
+            'android.permission.POST_NOTIFICATIONS',
+            'android.permission.SCHEDULE_EXACT_ALARM',
+            'android.permission.RECEIVE_BOOT_COMPLETED',
+            'android.permission.VIBRATE',
+            'android.permission.WAKE_LOCK'
+          ];
+          const miss = perms.filter(p => !x.includes('"' + p + '"'));
+          if (miss.length) {
+            const lines = miss.map(p => '    <uses-permission android:name="' + p + '" />').join('\n');
+            x = x.replace('<application', lines + '\n\n    <application');
+            fs.writeFileSync(f, x);
+          }
+          console.log('Permisos añadidos:', miss.join(', ') || 'ninguno');
+          JS
+          node prepare-android.js
+          python3 -c "import PIL" 2>/dev/null || pip install --quiet --break-system-packages pillow
+          cat > make-icons.py <<'PY'
+          import os, glob, sys
+          from PIL import Image, ImageDraw
+
+          res = 'android/app/src/main/res'
+          DENS = {'mdpi': 1, 'hdpi': 1.5, 'xhdpi': 2, 'xxhdpi': 3, 'xxxhdpi': 4}
+
+          def write(path, text):
+              os.makedirs(os.path.dirname(path), exist_ok=True)
+              open(path, 'w', encoding='utf-8').write(text)
+
+          # Icono pequeño de las notificaciones (silueta blanca de un calendario)
+          def stat(sz):
+              S = sz * 8
+              im = Image.new('RGBA', (S, S), (0, 0, 0, 0))
+              dr = ImageDraw.Draw(im)
+              W = (255, 255, 255, 255)
+              m = S * 0.12
+              dr.rounded_rectangle((m, S * 0.22, S - m, S - m), radius=S * 0.12, fill=W)
+              for x in (0.33, 0.67):
+                  dr.rounded_rectangle((S * x - S * 0.04, S * 0.08, S * x + S * 0.04, S * 0.30), radius=S * 0.04, fill=W)
+              dr.rectangle((m, S * 0.36, S - m, S * 0.39), fill=(0, 0, 0, 0))
+              for r in range(2):
+                  for c in range(3):
+                      x0 = S * (0.24 + c * 0.2)
+                      y0 = S * (0.46 + r * 0.2)
+                      dr.rounded_rectangle((x0, y0, x0 + S * 0.14, y0 + S * 0.14), radius=S * 0.03, fill=(0, 0, 0, 0))
+              return im.resize((sz, sz), Image.LANCZOS)
+
+          for n, m in DENS.items():
+              d = f'{res}/drawable-{n}'
+              os.makedirs(d, exist_ok=True)
+              stat(round(24 * m)).save(d + '/ic_stat_calendar.png')
+          print('Icono de notificaciones creado')
+
+          # Icono de la app
+          if not os.path.exists('icon.png'):
+              print('AVISO: no hay icon.png en la raíz del repositorio; se deja el icono por defecto.')
+              sys.exit(0)
+
+          src = Image.open('icon.png').convert('RGBA')
+          for f in glob.glob(res + '/mipmap-*/ic_launcher*'):
+              os.remove(f)
+
+          for n, m in DENS.items():
+              d = f'{res}/mipmap-{n}'
+              os.makedirs(d, exist_ok=True)
+              s = round(48 * m)
+              im = src.resize((s, s), Image.LANCZOS)
+              im.save(d + '/ic_launcher.png')
+              mask = Image.new('L', (s * 4, s * 4), 0)
+              ImageDraw.Draw(mask).ellipse((0, 0, s * 4 - 1, s * 4 - 1), fill=255)
+              mask = mask.resize((s, s), Image.LANCZOS)
+              rd = Image.new('RGBA', (s, s), (0, 0, 0, 0))
+              rd.paste(im, (0, 0), mask)
+              rd.save(d + '/ic_launcher_round.png')
+              f = round(108 * m)
+              inner = round(80 * m)
+              fg = Image.new('RGBA', (f, f), (0, 0, 0, 0))
+              fi = src.resize((inner, inner), Image.LANCZOS)
+              fg.paste(fi, ((f - inner) // 2, (f - inner) // 2), fi)
+              fg.save(d + '/ic_launcher_foreground.png')
+
+          xml = ('<?xml version="1.0" encoding="utf-8"?>\n'
+                 '<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">\n'
+                 '    <background android:drawable="@color/ic_launcher_background"/>\n'
+                 '    <foreground android:drawable="@mipmap/ic_launcher_foreground"/>\n'
+                 '</adaptive-icon>\n')
+          write(res + '/mipmap-anydpi-v26/ic_launcher.xml', xml)
+          write(res + '/mipmap-anydpi-v26/ic_launcher_round.xml', xml)
+          write(res + '/values/ic_launcher_background.xml',
+                '<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <color name="ic_launcher_background">#C42F2F</color>\n</resources>\n')
+          print('Icono de la app creado')
+          PY
+          python3 make-icons.py
+          # Cada versión sube de número para que se instale encima de la anterior.
+          sed -i -E "s/versionCode +=? *[0-9]+/versionCode = ${{ github.run_number }}/" android/app/build.gradle
+          grep -n "versionCode" android/app/build.gradle || true
+          npx cap sync android 2>&1 | tee -a "$GITHUB_WORKSPACE/log.txt"
+
+      # Clave de firma fija: cada APK nuevo se instala encima del anterior sin perder tus datos.
+      - name: Usar la clave de firma
+        env:
+          CLAVE_B64: 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
+        run: |
+          mkdir -p ~/.android
+          echo "$CLAVE_B64" | base64 -d > ~/.android/debug.keystore
+
+      - name: Compilar el APK
+        working-directory: android
+        run: ./gradlew assembleDebug --console=plain 2>&1 | tee -a "$GITHUB_WORKSPACE/log.txt"
+
+      - name: Guardar el APK
+        run: cp android/app/build/outputs/apk/debug/app-debug.apk Mi-Calendario.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Mi-Calendario-APK
+          path: Mi-Calendario.apk
+
+      - name: Publicar el APK en Releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "apk-${{ github.run_number }}" Mi-Calendario.apk \
+            --title "Mi Calendario · versión ${{ github.run_number }}" \
+            --notes "APK listo para instalar en Android." --latest
+
+      - name: Resumen
+        if: success()
+        run: |
+          {
+            echo "## ✅ APK listo"
+            echo "Descárgalo en: https://github.com/${{ github.repository }}/releases/latest (archivo Mi-Calendario.apk)"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Mostrar el error
+        if: failure()
+        run: |
+          {
+            echo "## ❌ No se pudo generar el APK"
+            echo "Haz una captura de esta pantalla y envíamela."
+            echo
+            echo "### Errores encontrados"
+            echo '```'
+            grep -n -E -A6 "What went wrong|error:|ERROR|FAILED|npm error|npm ERR" log.txt 2>/dev/null | head -n 50 || true
+            echo '```'
+            echo "### Final del registro"
+            echo '```'
+            tail -n 25 log.txt 2>/dev/null || echo "(sin registro: el fallo ocurrió antes de compilar, mira el paso marcado en rojo)"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
