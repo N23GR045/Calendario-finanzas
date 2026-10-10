@@ -1,0 +1,99 @@
+name: Generar APK
+
+# Se ejecuta solo cada vez que subes un cambio, y también a mano desde la pestaña Actions.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      # El servidor de GitHub ya trae el SDK de Android instalado: solo aceptamos las licencias.
+      - name: Preparar el SDK de Android
+        run: |
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          SDKM="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          if [ -x "$SDKM" ]; then yes | "$SDKM" --licenses > /dev/null || true; fi
+          ls "$ANDROID_HOME/platforms" || true
+
+      - name: Preparar el proyecto
+        run: |
+          test -f index.html || { echo "::error::Falta el archivo index.html en la raíz del repositorio"; exit 1; }
+          mkdir -p www && cp index.html www/index.html
+          cat > package.json <<'JSON'
+          {
+            "name": "mi-calendario",
+            "version": "1.0.0",
+            "private": true,
+            "dependencies": {
+              "@capacitor/android": "^8.0.0",
+              "@capacitor/app": "^8.0.0",
+              "@capacitor/core": "^8.0.0",
+              "@capacitor/local-notifications": "^8.0.0"
+            },
+            "devDependencies": {
+              "@capacitor/cli": "^8.0.0"
+            }
+          }
+          JSON
+          cat > capacitor.config.json <<'JSON'
+          {
+            "appId": "com.micalendario.laboral",
+            "appName": "Mi Calendario",
+            "webDir": "www",
+            "plugins": { "LocalNotifications": { "iconColor": "#10b981" } }
+          }
+          JSON
+          npm install 2>&1 | tee -a "$GITHUB_WORKSPACE/log.txt"
+
+      - name: Crear la app de Android y añadir permisos de avisos
+        run: |
+          npx cap add android 2>&1 | tee -a "$GITHUB_WORKSPACE/log.txt"
+          cat > prepare-android.js <<'JS'
+          const fs = require('fs');
+          const f = 'android/app/src/main/AndroidManifest.xml';
+          let x = fs.readFileSync(f, 'utf8');
+          const perms = [
+            'android.permission.POST_NOTIFICATIONS',
+            'android.permission.SCHEDULE_EXACT_ALARM',
+            'android.permission.RECEIVE_BOOT_COMPLETED',
+            'android.permission.VIBRATE',
+            'android.permission.WAKE_LOCK'
+          ];
+          const miss = perms.filter(p => !x.includes('"' + p + '"'));
+          if (miss.length) {
+            const lines = miss.map(p => '    <uses-permission android:name="' + p + '" />').join('\n');
+            x = x.replace('<application', lines + '\n\n    <application');
+            fs.writeFileSync(f, x);
+          }
+          console.log('Permisos añadidos:', miss.join(', ') || 'ninguno');
+          JS
+          node prepare-android.js
+          # Cada versión sube de número para que se instale encima de la anterior.
+          sed -i -E "s/versionCode +=? *[0-9]+/versionCode = ${{ github.run_number }}/" android/app/build.gradle
+          grep -n "versionCode" android/app/build.gradle || true
+          npx cap sync android 2>&1 | tee -a "$GITHUB_WORKSPACE/log.txt"
+
+      # Clave de firma fija: cada APK nuevo se instala encima del anterior sin perder tus datos.
+      - name: Usar la clave de firma
+        env:
+          CLAVE_B64: MIIKZgIBAzCCChAGCSqGSIb3DQEHAaCCCgEEggn9MIIJ+TCCBcAGCSqGSIb3DQEHAaCCBbEEggWtMIIFqTCCBaUGCyqGSIb3DQEMCgECoIIFQDCCBTwwZgYJKoZIhvcNAQUNMFkwOAYJKoZIhvcNAQUMMCsEFLxBo6Nrlb7JAZ973BCCoOciEF26AgInEAIB
