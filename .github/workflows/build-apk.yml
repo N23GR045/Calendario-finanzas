@@ -60,7 +60,10 @@ jobs:
             "appId": "com.micalendario.laboral",
             "appName": "Mi Calendario",
             "webDir": "www",
-            "plugins": { "LocalNotifications": { "iconColor": "#C42F2F", "smallIcon": "ic_stat_calendar" } }
+            "plugins": {
+              "LocalNotifications": { "iconColor": "#C42F2F", "smallIcon": "ic_stat_calendar" },
+              "CapacitorHttp": { "enabled": true }
+            }
           }
           JSON
           npm install 2>&1 | tee -a "$GITHUB_WORKSPACE/log.txt"
