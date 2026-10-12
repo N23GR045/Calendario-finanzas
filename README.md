@@ -22,7 +22,7 @@
 - **Horario fijo o rotativo:** configúralo una vez y el calendario se rellena solo.
 - **Horas extra y descansos:** la app calcula las horas y lo que cobras, entre semana y en fin de semana.
 - **Sueldo y reparto:** mira lo que llevas cobrado y cómo repartirlo (vivienda, comida, ahorro…).
-- **Finanzas:** apunta gastos e ingresos y ve cuánto te queda para gastar.
+- **Finanzas:** apunta gastos e ingresos extra (pagas, regalos…) y ve cuánto te queda para gastar.
 - **Festivos:** impórtalos desde Google Calendar.
 - **6 idiomas:** español, inglés, portugués, francés, alemán e italiano, o automático según tu móvil. Se cambia desde una pantalla con banderas.
 - **Unas 50 monedas:** euro, dólar, pesos, libra, real… con buscador y las más usadas arriba. Los importes se escriben con el formato de cada idioma.
@@ -31,6 +31,9 @@
 - **Actualizaciones desde la app:** en Ajustes → Actualizaciones, sin reinstalar nada.
 
 ## Novedades
+
+**1.5**
+- Ingresos extra: en Finanzas, botón «+» → Ingreso, para apuntar dinero que te dan fuera de tu salario. Suma a lo que te queda para gastar y sale en verde en Movimientos.
 
 **1.4**
 - Nuevos idiomas y monedas, con selector propio en Ajustes.
@@ -60,7 +63,7 @@ Todo se guarda **solo en tu móvil**. Haz una copia de seguridad antes de desins
 - **Fixed or rotating schedule:** set it once and the calendar fills itself in.
 - **Overtime and breaks:** hours and pay are calculated for weekdays and weekends.
 - **Pay and budget split:** see what you have earned and how to divide it (housing, food, savings…).
-- **Finance:** log expenses and income and see what is left to spend.
+- **Finance:** log expenses and extra income (bonuses, gifts…) and see what is left to spend.
 - **Holidays:** import them from Google Calendar.
 - **6 languages:** Spanish, English, Portuguese, French, German and Italian, or automatic from your phone.
 - **About 50 currencies:** with search and the most used ones on top.
