@@ -4,15 +4,17 @@
 
 <p align="center">Tu calendario de turnos, tus horas extra y tu sueldo, todo en el móvil.<br>Sin cuentas, sin anuncios y sin enviar tus datos a ningún sitio.</p>
 
+<p align="center"><i>Your shift calendar, overtime and pay, all on your phone.<br>No accounts, no ads, and your data never leaves your device.</i></p>
+
 <p align="center">
 <img src="docs/calendario.png" width="30%" alt="Calendario">
 <img src="docs/resumen.png" width="30%" alt="Resumen">
 <img src="docs/finanzas.png" width="30%" alt="Finanzas">
 </p>
 
-<p align="center"><img src="docs/demo.gif" width="45%" alt="Vídeo de demostración"></p>
+<p align="center"><img src="docs/demo.gif" width="42%" alt="Demostración / Demo"><br><sub><a href="docs/demo.mp4">Ver en vídeo (MP4) · Watch the MP4</a></sub></p>
 
-<p align="center"><b>Español</b> · <a href="#english">English</a></p>
+<p align="center">🇪🇸 <b>Español</b> (aquí abajo) · 🇬🇧 <a href="#english"><b>English</b></a> (<a href="#english">go to the English section</a>)</p>
 
 ## Qué puedes hacer
 
