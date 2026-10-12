@@ -18,6 +18,7 @@
 - **Sueldo y reparto:** mira lo que llevas cobrado y cómo repartirlo (vivienda, comida, ahorro…).
 - **Finanzas:** apunta gastos e ingresos y ve cuánto te queda para gastar.
 - **Festivos:** impórtalos desde Google Calendar.
+- **Idiomas y monedas:** español, inglés, portugués, francés, alemán e italiano, y unas 50 monedas con buscador.
 - **Copias de seguridad:** automáticas y también en texto o archivo para guardarlas donde quieras.
 - **Actualizaciones desde la app:** en Ajustes → Actualizaciones, sin reinstalar nada.
 
