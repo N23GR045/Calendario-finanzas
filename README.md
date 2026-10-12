@@ -27,10 +27,13 @@
 - **6 idiomas:** español, inglés, portugués, francés, alemán e italiano, o automático según tu móvil. Se cambia desde una pantalla con banderas.
 - **Unas 50 monedas:** euro, dólar, pesos, libra, real… con buscador y las más usadas arriba. Los importes se escriben con el formato de cada idioma.
 - **A tu gusto:** tema claro u oscuro, color principal, tamaño del texto y semana que empieza en lunes o domingo.
-- **Copias de seguridad:** automáticas y también en texto o archivo para guardarlas donde quieras.
+- **Copias de seguridad:** automáticas, y también como archivo descargable o texto comprimido para guardarlas donde quieras.
 - **Actualizaciones desde la app:** en Ajustes → Actualizaciones, sin reinstalar nada.
 
 ## Novedades
+
+**1.6**
+- Copia de seguridad como archivo descargable o como texto comprimido (mucho más corto para copiar y pegar). Al restaurar, la app reconoce los dos formatos.
 
 **1.5**
 - Ingresos extra: en Finanzas, botón «+» → Ingreso, para apuntar dinero que te dan fuera de tu salario. Suma a lo que te queda para gastar y sale en verde en Movimientos.
@@ -68,7 +71,7 @@ Todo se guarda **solo en tu móvil**. Haz una copia de seguridad antes de desins
 - **6 languages:** Spanish, English, Portuguese, French, German and Italian, or automatic from your phone.
 - **About 50 currencies:** with search and the most used ones on top.
 - **Your style:** light or dark theme, accent colour, text size and week start.
-- **Backups:** automatic, or as text or a file you can keep anywhere.
+- **Backups:** automatic, or as a downloadable file or compressed text you can keep anywhere.
 - **In-app updates:** Settings → Updates, no reinstalling.
 
 ### Install on Android
