@@ -10,6 +10,10 @@
 <img src="docs/finanzas.png" width="30%" alt="Finanzas">
 </p>
 
+<p align="center"><img src="docs/demo.gif" width="45%" alt="Vídeo de demostración"></p>
+
+<p align="center"><b>Español</b> · <a href="#english">English</a></p>
+
 ## Qué puedes hacer
 
 - **Calendario de turnos:** marca tus días (mañana, tarde, noche, vacaciones, festivos…) con colores y hora de entrada y salida.
@@ -41,6 +45,36 @@
 ## Tus datos
 
 Todo se guarda **solo en tu móvil**. Haz una copia de seguridad antes de desinstalar la app o cambiar de teléfono (Ajustes → Datos).
+
+---
+
+## English
+
+**My Work Calendar & Finance** is a personal Android app that keeps your shifts, overtime, pay and everyday spending in one place. No accounts, no ads, and your data never leaves your phone.
+
+### What you can do
+
+- **Shift calendar:** mark each day (morning, afternoon, night, holiday…) with colours and start and end times.
+- **Fixed or rotating schedule:** set it once and the calendar fills itself in.
+- **Overtime and breaks:** hours and pay are calculated for weekdays and weekends.
+- **Pay and budget split:** see what you have earned and how to divide it (housing, food, savings…).
+- **Finance:** log expenses and income and see what is left to spend.
+- **Holidays:** import them from Google Calendar.
+- **6 languages:** Spanish, English, Portuguese, French, German and Italian, or automatic from your phone.
+- **About 50 currencies:** with search and the most used ones on top.
+- **Your style:** light or dark theme, accent colour, text size and week start.
+- **Backups:** automatic, or as text or a file you can keep anywhere.
+- **In-app updates:** Settings → Updates, no reinstalling.
+
+### Install on Android
+
+1. Open the **Releases** tab of this repository and download the latest `.apk`.
+2. Open it on your phone and allow installs from unknown sources if asked.
+3. To update later, go to **Settings → Updates → Check for updates**.
+
+### Your data
+
+Everything is stored **only on your phone**. Make a backup before uninstalling the app or switching phones (Settings → Data).
 
 ---
 <sub>La app es un único archivo `index.html` empaquetado como APK con Capacitor y compilado automáticamente con GitHub Actions.</sub>
