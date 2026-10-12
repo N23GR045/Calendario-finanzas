@@ -18,9 +18,19 @@
 - **Sueldo y reparto:** mira lo que llevas cobrado y cómo repartirlo (vivienda, comida, ahorro…).
 - **Finanzas:** apunta gastos e ingresos y ve cuánto te queda para gastar.
 - **Festivos:** impórtalos desde Google Calendar.
-- **Idiomas y monedas:** español, inglés, portugués, francés, alemán e italiano, y unas 50 monedas con buscador.
+- **6 idiomas:** español, inglés, portugués, francés, alemán e italiano, o automático según tu móvil. Se cambia desde una pantalla con banderas.
+- **Unas 50 monedas:** euro, dólar, pesos, libra, real… con buscador y las más usadas arriba. Los importes se escriben con el formato de cada idioma.
+- **A tu gusto:** tema claro u oscuro, color principal, tamaño del texto y semana que empieza en lunes o domingo.
 - **Copias de seguridad:** automáticas y también en texto o archivo para guardarlas donde quieras.
 - **Actualizaciones desde la app:** en Ajustes → Actualizaciones, sin reinstalar nada.
+
+## Novedades
+
+**1.4**
+- Nuevos idiomas y monedas, con selector propio en Ajustes.
+- Las horas del día solo se piden en los días trabajados.
+- Importar festivos y buscar actualizaciones funcionan también dentro de la app ya actualizada.
+- Puedes elegir de qué rama actualizar (`main` o `prueba`) con un desplegable.
 
 ## Instalar en Android
 
