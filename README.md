@@ -35,7 +35,7 @@ Si trabajas por turnos, a final de mes nunca sabes del todo cuánto vas a cobrar
 | 📅 **Calendario de turnos** | Marca mañana, tarde, noche, vacaciones o festivos con colores. Crea tus propias categorías. |
 | 🔁 **Horario fijo o rotativo** | Configúralo una vez y el calendario se rellena solo (semanal o por ciclos, como 4 + 2). |
 | ⏱️ **Horas y sueldo** | Calcula horas, extras y descansos, con tarifa distinta entre semana y en fin de semana o festivo. |
-| 🥧 **Reparto del sueldo** | Divide lo que cobras en porciones (vivienda, comida, ahorro…) con límite mensual. |
+| 🥧 **Reparto del sueldo** | Divide lo que cobras en partidas (vivienda, comida, ahorro…) con límite mensual. |
 | 💶 **Finanzas** | Gastos, ingresos extra y pagos que se repiten. Ves cuánto te queda cada mes y cada día. |
 | 🔔 **Avisos** | Recordatorios de entrada, salida, descanso y festivos, aunque la app esté cerrada. |
 | 🎉 **Festivos** | Impórtalos desde Google Calendar eligiendo país; tú decides cuáles añadir. |
@@ -55,8 +55,8 @@ Si trabajas por turnos, a final de mes nunca sabes del todo cuánto vas a cobrar
 
 1. **Marca tus días.** Toca un día del calendario, elige el tipo de jornada y guarda. ¿Trabajas siempre igual? Ve a **Ajustes → Horario fijo** y la app lo hará por ti.
 2. **Ajusta tu sueldo.** En **Ajustes → Salario** indica tu tarifa por hora o tu sueldo mensual, y el precio de las horas extra.
-3. **Mira el resumen.** En la pestaña **Resumen** tienes lo cobrado, las horas y el reparto por porciones.
-4. **Apunta tus gastos.** En **Finanzas**, pulsa **+**, escribe el importe y elige la porción. La app te dice cuánto te queda para gastar.
+3. **Mira el resumen.** En la pestaña **Resumen** tienes lo cobrado, las horas y el reparto por partidas.
+4. **Apunta tus gastos.** En **Finanzas**, pulsa **+**, escribe el importe y elige la partida. La app te dice cuánto te queda para gastar.
 5. **Activa los avisos** (opcional) en **Ajustes → Avisos** y concede el permiso cuando el móvil lo pida.
 
 <details>
@@ -94,7 +94,7 @@ Es una app de un único archivo: todo el código está en [`index.html`](index.h
 
 ## 📄 Licencia
 
-Este repositorio todavía no incluye una licencia, así que por defecto **todos los derechos están reservados**. Si quieres reutilizar parte del código, abre un *issue*.
+Distribuido bajo la [licencia MIT](LICENSE): puedes usar, copiar, modificar y compartir el código, también con fines comerciales, siempre que conserves el aviso de copyright.
 
 ---
 
@@ -115,7 +115,7 @@ If you work shifts, you rarely know exactly what your next payslip will be: over
 | 📅 **Shift calendar** | Mark morning, afternoon, night, holiday or vacation days with colours. Create your own categories. |
 | 🔁 **Fixed or rotating schedule** | Set it once and the calendar fills itself in (weekly, or in cycles such as 4 on + 2 off). |
 | ⏱️ **Hours and pay** | Calculates hours, overtime and breaks, with separate rates for weekdays and weekends or holidays. |
-| 🥧 **Pay split** | Divide your income into portions (housing, food, savings…) with a monthly limit each. |
+| 🥧 **Pay split** | Divide your income into budget lines (housing, food, savings…) with a monthly limit each. |
 | 💶 **Finance** | Expenses, extra income and recurring payments. See what is left each month and each day. |
 | 🔔 **Reminders** | Start, end, break and holiday reminders, even when the app is closed. |
 | 🎉 **Holidays** | Import them from Google Calendar by choosing a country; you pick which ones to add. |
@@ -136,7 +136,7 @@ If you work shifts, you rarely know exactly what your next payslip will be: over
 1. **Mark your days.** Tap a day, choose the type of shift and save. Always the same hours? **Settings → Fixed schedule** does it for you.
 2. **Set your pay.** In **Settings → Salary** enter your hourly rate or monthly salary and your overtime rates.
 3. **Check the summary.** The **Summary** tab shows what you have earned, your hours and the split.
-4. **Log your spending.** In **Finance**, tap **+**, type the amount and pick the portion. The app tells you what is left to spend.
+4. **Log your spending.** In **Finance**, tap **+**, type the amount and pick the budget line. The app tells you what is left to spend.
 5. **Turn on reminders** (optional) in **Settings → Reminders** and grant the permission when your phone asks.
 
 <details>
@@ -159,4 +159,4 @@ The app is a single file: all the code lives in [`index.html`](index.html) and i
 
 ### 📄 License
 
-This repository does not include a license yet, so **all rights are reserved** by default. If you would like to reuse part of the code, please open an issue.
+Released under the [MIT License](LICENSE): you may use, copy, modify and share the code, including commercially, as long as you keep the copyright notice.
