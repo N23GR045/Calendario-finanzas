@@ -14,7 +14,7 @@
 
 <p align="center">🇪🇸 <b>Español</b> · 🇬🇧 <a href="#english"><b>English</b></a></p>
 
-<p align="center"><img src="docs/demo.gif" width="42%" alt="Demostración de la app"><br><sub><a href="docs/demo.mp4">Ver en vídeo (MP4)</a></sub></p>
+<p align="center"><img src="docs/demo.gif" width="42%" alt="Demostración de la app"><br><sub><a href="docs/demo.mp4">Ver el vídeo completo (MP4, 50 s)</a> · <a href="docs/demo-en.mp4">Watch it in English</a></sub></p>
 
 <p align="center">
 <img src="docs/calendario.png" width="30%" alt="Calendario de turnos">
@@ -103,6 +103,8 @@ Distribuido bajo la [licencia MIT](LICENSE): puedes usar, copiar, modificar y co
 <h2 align="center">🇬🇧 English</h2>
 
 <p align="center"><b>Log your shifts and the app works out what you earn and what you have left to spend.</b><br>No accounts, no ads, and your data never leaves your phone.</p>
+
+<p align="center"><a href="docs/demo-en.mp4">▶ Watch the 50-second demo (MP4)</a></p>
 
 ### 🧭 The problem
 
