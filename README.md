@@ -47,7 +47,7 @@ Si trabajas por turnos, a final de mes nunca sabes del todo cuánto vas a cobrar
 
 1. Entra en la pestaña **[Releases](https://github.com/N23GR045/Calendario-finanzas/releases)** y descarga el `.apk` más reciente.
 2. Ábrelo en el móvil y permite instalar desde fuentes desconocidas si te lo pide.
-3. Abre la app. Verás un mes de ejemplo para que veas cómo funciona: **Ajustes → Datos → Borrar registros** lo deja en blanco.
+3. Abre la app. Un asistente de tres pasos te pregunta tu turno y tu sueldo. Si prefieres curiosear antes, verás un mes de ejemplo y el botón **Empezar con mis datos**.
 
 > Para actualizar más adelante: **Ajustes → Actualizaciones → Buscar actualización**. No hace falta reinstalar ni perder datos.
 
@@ -70,6 +70,11 @@ Si trabajas por turnos, a final de mes nunca sabes del todo cuánto vas a cobrar
 </details>
 
 ## 🆕 Novedades
+
+**1.9**
+- Asistente de bienvenida de 3 pasos: tu turno, tu sueldo y los avisos. El mes se rellena solo.
+- Banner «Estás viendo un mes de ejemplo» con el botón **Empezar con mis datos**.
+- Modo **Marcar varios días**: elige un tipo y toca o arrastra por el calendario.
 
 **1.8**
 - Ajustes más claros: secciones por colores que se abren de una en una y categorías desplegables.
@@ -129,7 +134,7 @@ If you work shifts, you rarely know exactly what your next payslip will be: over
 
 1. Open the **[Releases](https://github.com/N23GR045/Calendario-finanzas/releases)** tab and download the latest `.apk`.
 2. Open it on your phone and allow installs from unknown sources if asked.
-3. Launch the app. You will see a sample month so you can try it out: **Settings → Data → Delete records** clears it.
+3. Launch the app. A three-step wizard asks for your shift and pay. If you would rather look around first, you will see a sample month and a **Start with my data** button.
 
 > To update later: **Settings → Updates → Check for updates**. No reinstalling, no data loss.
 
