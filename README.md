@@ -79,6 +79,7 @@ Descarga [`index.html`](index.html) y ábrelo en el navegador del móvil o del o
 - Asistente de bienvenida de 3 pasos: tu turno, tu sueldo y los avisos. El mes se rellena solo.
 - Banner «Estás viendo un mes de ejemplo» con el botón **Empezar con mis datos**.
 - Modo **Marcar varios días**: elige un tipo y toca o arrastra por el calendario.
+- Botón del ojo junto al mes para **ocultar los importes** (••••) cuando alguien mira tu pantalla.
 
 **1.8**
 - Ajustes más claros: secciones por colores que se abren de una en una y categorías desplegables.
