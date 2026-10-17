@@ -84,12 +84,14 @@ jobs:
             'android.permission.VIBRATE',
             'android.permission.WAKE_LOCK'
           ];
+          x = x.replace(/android:allowBackup="true"/, 'android:allowBackup="false"');
           const miss = perms.filter(p => !x.includes('"' + p + '"'));
           if (miss.length) {
             const lines = miss.map(p => '    <uses-permission android:name="' + p + '" />').join('\n');
             x = x.replace('<application', lines + '\n\n    <application');
             fs.writeFileSync(f, x);
           }
+          fs.writeFileSync(f, x);
           console.log('Permisos añadidos:', miss.join(', ') || 'ninguno');
           JS
           node prepare-android.js
