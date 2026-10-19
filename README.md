@@ -43,11 +43,15 @@ Si trabajas por turnos, a final de mes nunca sabes del todo cuánto vas a cobrar
 | 💾 **Copias de seguridad** | Automáticas, o como archivo descargable o texto comprimido. |
 | 🔄 **Actualizaciones** | Desde la propia app, con aviso cuando hay una versión nueva. |
 
+## 👀 Pruébala sin instalar
+
+Descarga [`index.html`](index.html) y ábrelo en el navegador del móvil o del ordenador: funciona sin compilar nada y sin conexión. Verás el asistente de bienvenida o, si lo saltas, un mes de ejemplo con el botón **Empezar con mis datos**.
+
 ## 🚀 Instalación rápida
 
 1. Entra en la pestaña **[Releases](https://github.com/N23GR045/Calendario-finanzas/releases)** y descarga el `.apk` más reciente.
 2. Ábrelo en el móvil y permite instalar desde fuentes desconocidas si te lo pide.
-3. Abre la app. Verás un mes de ejemplo para que veas cómo funciona: **Ajustes → Datos → Borrar registros** lo deja en blanco.
+3. Abre la app. Un asistente de tres pasos te pregunta tu turno y tu sueldo. Si prefieres curiosear antes, verás un mes de ejemplo y el botón **Empezar con mis datos**.
 
 > Para actualizar más adelante: **Ajustes → Actualizaciones → Buscar actualización**. No hace falta reinstalar ni perder datos.
 
@@ -71,6 +75,12 @@ Si trabajas por turnos, a final de mes nunca sabes del todo cuánto vas a cobrar
 
 ## 🆕 Novedades
 
+**1.9**
+- Asistente de bienvenida de 3 pasos: tu turno, tu sueldo y los avisos. El mes se rellena solo.
+- Banner «Estás viendo un mes de ejemplo» con el botón **Empezar con mis datos**.
+- Modo **Marcar varios días**: elige un tipo y toca o arrastra por el calendario.
+- Botón del ojo junto al mes para **ocultar los importes** (••••) cuando alguien mira tu pantalla.
+
 **1.8**
 - Ajustes más claros: secciones por colores que se abren de una en una y categorías desplegables.
 - Aviso cuando hay una actualización: notificación, punto rojo en Ajustes y banner para instalarla.
@@ -82,6 +92,29 @@ Si trabajas por turnos, a final de mes nunca sabes del todo cuánto vas a cobrar
 **1.6** · Copia de seguridad como archivo descargable o como texto comprimido.
 
 **1.5** · Ingresos extra (pagas, regalos…) en Finanzas.
+
+## 🧩 Cómo está hecha
+
+| Pieza | Qué hace |
+|---|---|
+| [`index.html`](index.html) | Toda la app: interfaz, cálculo de sueldo, finanzas, traducciones y avisos. HTML, CSS y JavaScript sin dependencias. |
+| Datos | Se guardan en el `localStorage` del móvil, en una sola clave. No hay servidor ni cuentas. |
+| Cálculo | La función `calc()` suma horas ordinarias, extras entre semana y extras de fin de semana o festivo según la categoría de cada día. |
+| Traducciones | La tabla `TXR` (`[es, en, pt, fr, de, it, ro]`); el texto fuente está en español y se traduce al mostrarlo. |
+| Avisos | Notificaciones locales de Capacitor, programadas a partir de los días marcados. |
+| Empaquetado | [`build-apk.yml`](.github/workflows/build-apk.yml) envuelve `index.html` con Capacitor y firma el APK al subir cambios a `main`. |
+| Actualizaciones | La app descarga la versión nueva desde GitHub y, si falla al arrancar, vuelve sola a la anterior sin perder datos. |
+
+## 🗺️ Hoja de ruta
+
+- [x] Asistente de bienvenida y mes de ejemplo (1.9)
+- [x] Marcar varios días arrastrando (1.9)
+- [ ] Tarjeta «Hoy» al inicio del calendario
+- [ ] Sección «Avanzado» para lo técnico en Ajustes
+- [ ] Permiso de avisos justo después del primer turno
+- [ ] Aviso de cierre de mes con el resumen
+- [ ] Widget de Android con el turno de hoy y lo que te queda
+- [ ] Compartir el resumen del mes como imagen
 
 ## 🛠️ Para quien quiera colaborar
 
@@ -125,11 +158,15 @@ If you work shifts, you rarely know exactly what your next payslip will be: over
 | 💾 **Backups** | Automatic, or as a downloadable file or compressed text. |
 | 🔄 **Updates** | From inside the app, with a notification when a new version is out. |
 
+### 👀 Try it without installing
+
+Download [`index.html`](index.html) and open it in your phone or desktop browser: nothing to build, and it works offline. You will see the welcome wizard or, if you skip it, a sample month with a **Start with my data** button.
+
 ### 🚀 Quick install
 
 1. Open the **[Releases](https://github.com/N23GR045/Calendario-finanzas/releases)** tab and download the latest `.apk`.
 2. Open it on your phone and allow installs from unknown sources if asked.
-3. Launch the app. You will see a sample month so you can try it out: **Settings → Data → Delete records** clears it.
+3. Launch the app. A three-step wizard asks for your shift and pay. If you would rather look around first, you will see a sample month and a **Start with my data** button.
 
 > To update later: **Settings → Updates → Check for updates**. No reinstalling, no data loss.
 
@@ -149,6 +186,29 @@ If you work shifts, you rarely know exactly what your next payslip will be: over
 - **Reminders don't arrive when the app is closed.** Allow exact alarms and, on Xiaomi, Huawei, Oppo or Samsung, remove battery saving for the app (**Phone settings → Apps → My Calendar → Battery → No restrictions**).
 
 </details>
+
+### 🧩 How it works
+
+| Piece | What it does |
+|---|---|
+| [`index.html`](index.html) | The whole app: UI, pay calculation, finance, translations and reminders. Plain HTML, CSS and JavaScript, no dependencies. |
+| Data | Stored in the phone's `localStorage` under a single key. No server, no accounts. |
+| Calculation | `calc()` adds up regular hours, weekday overtime and weekend or holiday overtime based on each day's category. |
+| Translations | The `TXR` table (`[es, en, pt, fr, de, it, ro]`); source text is Spanish and is translated when displayed. |
+| Reminders | Capacitor local notifications, scheduled from the days you have marked. |
+| Packaging | [`build-apk.yml`](.github/workflows/build-apk.yml) wraps `index.html` with Capacitor and signs the APK on pushes to `main`. |
+| Updates | The app downloads the new version from GitHub and, if it fails on start-up, rolls back to the previous one without losing data. |
+
+### 🗺️ Roadmap
+
+- [x] Welcome wizard and sample month (1.9)
+- [x] Mark several days by dragging (1.9)
+- [ ] "Today" card at the top of the calendar
+- [ ] "Advanced" section for technical settings
+- [ ] Ask for reminder permission right after the first shift
+- [ ] Month-end notification with the summary
+- [ ] Android widget with today's shift and what is left
+- [ ] Share the monthly summary as an image
 
 ### 🛠️ Contributing
 
