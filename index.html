@@ -639,10 +639,10 @@ function vSum(){
   <div class="row"><span><span class="dot" style="--c:#3b82f6"></span>Extras L–V <span class="fl">${hh(r.otWk)}</span></span><b>${money(r.payWk)}</b></div>
   <div class="row"><span><span class="dot" style="--c:#ef4444"></span>Extras FS / festivo <span class="fl">${hh(r.otWe)}</span></span><b>${money(r.payWe)}</b></div></section>`;
   const sp=vSplit(r);
-  h+=sec('srep','Reparto del sueldo',sp.s,sp.b);
+  h+=secD('srep','Reparto del sueldo',sp.s,sp.b);
   const rows=S.cats.filter(c=>r.byCat[c.id]).map(c=>`<div class="row"><span><span class="dot" style="--c:${esc(c.color)}"></span>${esc(c.name)}</span><b>${r.byCat[c.id]}</b></div>`).join('');
-  h+=sec('sdi','Días',`${r.days} trabajados ${S.per==='m'?'este mes':'este año'}`,`<div class="row"><span>Trabajados ${S.per==='m'?'en el mes':'en el año'}</span><b class="big">${r.days}</b></div><div class="row mu"><span>Total general</span><span>${g.days}</span></div>${rows?'<hr style="border:0;border-top:1px solid var(--bd);margin:6px 0">'+rows:''}`);
-  h+=sec('sva',`Vacaciones ${y}`,`Te quedan ${left} días`,`<div class="row"><span>Usadas</span><b>${yr.vacDays} ${DE()} ${S.set.vac}</b></div><div class="bar"><div style="width:${pv}%;background:#ec4899"></div></div><div class="row mu"><span>Te quedan</span><b style="color:${left<0?'#e5484d':'inherit'}">${left} días</b></div>`);
+  h+=secD('sdi','Días',`${r.days} trabajados ${S.per==='m'?'este mes':'este año'}`,`<div class="row"><span>Trabajados ${S.per==='m'?'en el mes':'en el año'}</span><b class="big">${r.days}</b></div><div class="row mu"><span>Total general</span><span>${g.days}</span></div>${rows?'<hr style="border:0;border-top:1px solid var(--bd);margin:6px 0">'+rows:''}`);
+  h+=secD('sva',`Vacaciones ${y}`,`Te quedan ${left} días`,`<div class="row"><span>Usadas</span><b>${yr.vacDays} ${DE()} ${S.set.vac}</b></div><div class="bar"><div style="width:${pv}%;background:#ec4899"></div></div><div class="row mu"><span>Te quedan</span><b style="color:${left<0?'#e5484d':'inherit'}">${left} días</b></div>`);
   return h;
 }
 
@@ -942,6 +942,9 @@ const SK={upd:'versión actualizar actualización novedades cambios github',hol:
 function sec(id,t,sm,b,bd){SB[id]={t,sm,b,bd:bd||''};SO.push(id);
   return `<button class="mr g-${SECG[id]||'gen'}" data-id="${id}" onclick="subOpen(this.dataset.id)"><span class="si">${I(SECI[id]||'gear')}</span><div><div class="st">${t}</div><div class="ss">${sm}</div></div>${bd||''}<span class="ch">›</span></button>`}
 const SGR=[['cal','Calendario','calendar'],['fin','Finanzas','card'],['res','Resumen','chart'],['gen','General','gear']];
+function secD(id,t,sm,b,bd){
+  return `<details class="sec g-${SECG[id]||'gen'}"${S.open&&S.open[id]?' open':''} ontoggle="secT(this,'${id}')"><summary><span class="si">${I(SECI[id]||'gear')}</span><div><div class="st">${t}</div><div class="ss">${sm}</div></div>${bd||''}<span class="ch">›</span></summary><div class="sb">${b}</div></details>`;
+}
 function menuList(){const q=clFold(SQ.trim()),row=id=>sec.row(id);
   if(q){const ids=SO.filter(id=>clFold(SB[id].t+' '+SB[id].sm.replace(/<[^>]*>/g,'')+' '+(SK[id]||'')).includes(q));
     return ids.length?`<div class="mg">${ids.map(row).join('')}</div>`:`<p class="mu" style="text-align:center;margin:22px 0">No encuentro ajustes con esa palabra</p>`}
