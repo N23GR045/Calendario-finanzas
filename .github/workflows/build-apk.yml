@@ -60,10 +60,10 @@ jobs:
           cat > capacitor.config.json <<'JSON'
           {
             "appId": "com.micalendario.laboral",
-            "appName": "Mi Calendario",
+            "appName": "Jornal",
             "webDir": "www",
             "plugins": {
-              "LocalNotifications": { "iconColor": "#C42F2F", "smallIcon": "ic_stat_calendar" },
+              "LocalNotifications": { "iconColor": "#0F766E", "smallIcon": "ic_stat_calendar" },
               "CapacitorHttp": { "enabled": true }
             }
           }
@@ -167,7 +167,7 @@ jobs:
           write(res + '/mipmap-anydpi-v26/ic_launcher.xml', xml)
           write(res + '/mipmap-anydpi-v26/ic_launcher_round.xml', xml)
           write(res + '/values/ic_launcher_background.xml',
-                '<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <color name="ic_launcher_background">#C42F2F</color>\n</resources>\n')
+                '<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <color name="ic_launcher_background">#0F766E</color>\n</resources>\n')
           print('Icono de la app creado')
           PY
           python3 make-icons.py
@@ -202,7 +202,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release create "apk-${{ github.run_number }}" Mi-Calendario.apk \
-            --title "Mi Calendario · versión ${{ github.run_number }}" \
+            --title "Jornal · versión ${{ github.run_number }}" \
             --notes "APK listo para instalar en Android." --latest
 
       - name: Resumen

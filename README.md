@@ -1,6 +1,6 @@
-<p align="center"><img src="icon.png" width="96" alt="Logo de Mi Calendario Laboral y Finanzas"></p>
+<p align="center"><img src="icon.png" width="96" alt="Logo de Jornal"></p>
 
-<h1 align="center">Mi Calendario Laboral y Finanzas</h1>
+<h1 align="center">Jornal</h1>
 
 <p align="center"><b>Marca tus turnos y la app calcula cuánto cobras y cuánto te queda para gastar.</b><br>Sin cuentas, sin anuncios y sin enviar tus datos a ningún sitio.</p>
 
@@ -68,7 +68,7 @@ Descarga [`index.html`](index.html) y ábrelo en el navegador del móvil o del o
 
 - **¿Dónde se guardan mis datos?** Solo en tu móvil. Si desinstalas la app o cambias de teléfono, antes haz una copia en **Ajustes → Datos → Copia de seguridad**.
 - **¿Funciona sin internet?** Sí. Solo necesita conexión para importar festivos y buscar actualizaciones.
-- **No me llegan los avisos con la app cerrada.** Concede el permiso de alarmas exactas y, en Xiaomi, Huawei, Oppo o Samsung, quita el ahorro de batería a la app (**Ajustes del móvil → Aplicaciones → Mi Calendario → Batería → Sin restricciones**).
+- **No me llegan los avisos con la app cerrada.** Concede el permiso de alarmas exactas y, en Xiaomi, Huawei, Oppo o Samsung, quita el ahorro de batería a la app (**Ajustes del móvil → Aplicaciones → Jornal → Batería → Sin restricciones**).
 - **¿Cómo cambio de idioma o de moneda?** **Ajustes → Idioma y formato**.
 
 </details>
