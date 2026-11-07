@@ -63,7 +63,7 @@ jobs:
             "appName": "Jornal",
             "webDir": "www",
             "plugins": {
-              "LocalNotifications": { "iconColor": "#0F766E", "smallIcon": "ic_stat_calendar" },
+              "LocalNotifications": { "iconColor": "#FF6B6B", "smallIcon": "ic_stat_calendar" },
               "CapacitorHttp": { "enabled": true }
             }
           }
@@ -154,20 +154,26 @@ jobs:
               rd.save(d + '/ic_launcher_round.png')
               f = round(108 * m)
               inner = round(80 * m)
-              fg = Image.new('RGBA', (f, f), (0, 0, 0, 0))
-              fi = src.resize((inner, inner), Image.LANCZOS)
-              fg.paste(fi, ((f - inner) // 2, (f - inner) // 2), fi)
-              fg.save(d + '/ic_launcher_foreground.png')
+              if os.path.exists('icon-fg.png'):
+                  Image.open('icon-fg.png').convert('RGBA').resize((f, f), Image.LANCZOS).save(d + '/ic_launcher_foreground.png')
+              else:
+                  fg = Image.new('RGBA', (f, f), (0, 0, 0, 0))
+                  fi = src.resize((inner, inner), Image.LANCZOS)
+                  fg.paste(fi, ((f - inner) // 2, (f - inner) // 2), fi)
+                  fg.save(d + '/ic_launcher_foreground.png')
+              if os.path.exists('icon-mono.png'):
+                  Image.open('icon-mono.png').convert('RGBA').resize((f, f), Image.LANCZOS).save(d + '/ic_launcher_monochrome.png')
 
           xml = ('<?xml version="1.0" encoding="utf-8"?>\n'
                  '<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">\n'
                  '    <background android:drawable="@color/ic_launcher_background"/>\n'
                  '    <foreground android:drawable="@mipmap/ic_launcher_foreground"/>\n'
-                 '</adaptive-icon>\n')
+                 + ('    <monochrome android:drawable="@mipmap/ic_launcher_monochrome"/>\n' if os.path.exists('icon-mono.png') else '')
+                 + '</adaptive-icon>\n')
           write(res + '/mipmap-anydpi-v26/ic_launcher.xml', xml)
           write(res + '/mipmap-anydpi-v26/ic_launcher_round.xml', xml)
           write(res + '/values/ic_launcher_background.xml',
-                '<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <color name="ic_launcher_background">#0F766E</color>\n</resources>\n')
+                '<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <color name="ic_launcher_background">#1C1C1E</color>\n</resources>\n')
           print('Icono de la app creado')
           PY
           python3 make-icons.py
