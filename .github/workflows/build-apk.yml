@@ -168,8 +168,8 @@ jobs:
 
           xml = ('<?xml version="1.0" encoding="utf-8"?>\n'
                  '<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">\n'
-                 ('    <background android:drawable="@mipmap/ic_launcher_background"/>\n' if os.path.exists('icon-bg.png') else '    <background android:drawable="@color/ic_launcher_background"/>\n')
-                 '    <foreground android:drawable="@mipmap/ic_launcher_foreground"/>\n'
+                 + ('    <background android:drawable="@mipmap/ic_launcher_background"/>\n' if os.path.exists('icon-bg.png') else '    <background android:drawable="@color/ic_launcher_background"/>\n')
+                 + '    <foreground android:drawable="@mipmap/ic_launcher_foreground"/>\n'
                  + ('    <monochrome android:drawable="@mipmap/ic_launcher_monochrome"/>\n' if os.path.exists('icon-mono.png') else '')
                  + '</adaptive-icon>\n')
           write(res + '/mipmap-anydpi-v26/ic_launcher.xml', xml)
