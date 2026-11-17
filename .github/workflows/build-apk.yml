@@ -4,7 +4,7 @@ name: Generar APK
 on:
   workflow_dispatch:
   push:
-    branches: [main, master]
+    branches: [main, master, aurora-os]
 
 permissions:
   contents: write
@@ -201,9 +201,18 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "apk-${{ github.run_number }}" Mi-Calendario.apk \
-            --title "Mi Calendario · versión ${{ github.run_number }}" \
-            --notes "APK listo para instalar en Android." --latest
+          if [ "$GITHUB_REF_NAME" = "main" ] || [ "$GITHUB_REF_NAME" = "master" ]; then
+            gh release create "apk-${{ github.run_number }}" Mi-Calendario.apk \
+              --target "$GITHUB_SHA" \
+              --title "Mi Calendario · versión ${{ github.run_number }}" \
+              --notes "APK listo para instalar en Android." --latest
+          else
+            # Ramas de prueba: versión previa que no sustituye a la principal
+            gh release create "prueba-$GITHUB_REF_NAME-${{ github.run_number }}" Mi-Calendario.apk \
+              --target "$GITHUB_SHA" --prerelease \
+              --title "Prueba ($GITHUB_REF_NAME) · versión ${{ github.run_number }}" \
+              --notes "APK de prueba de la rama $GITHUB_REF_NAME. Se instala encima de tu app sin perder los datos."
+          fi
 
       - name: Resumen
         if: success()
