@@ -82,7 +82,9 @@ jobs:
             'android.permission.SCHEDULE_EXACT_ALARM',
             'android.permission.RECEIVE_BOOT_COMPLETED',
             'android.permission.VIBRATE',
-            'android.permission.WAKE_LOCK'
+            'android.permission.WAKE_LOCK',
+            'android.permission.READ_CALENDAR',
+            'android.permission.WRITE_CALENDAR'
           ];
           x = x.replace(/android:allowBackup="true"/, 'android:allowBackup="false"');
           const miss = perms.filter(p => !x.includes('"' + p + '"'));
@@ -95,6 +97,10 @@ jobs:
           console.log('Permisos añadidos:', miss.join(', ') || 'ninguno');
           JS
           node prepare-android.js
+          # Plugin propio para sincronizar con el calendario del móvil
+          JAVA_DIR=android/app/src/main/java/com/micalendario/laboral
+          mkdir -p "$JAVA_DIR"
+          cp android-plugin/CalSyncPlugin.java android-plugin/MainActivity.java "$JAVA_DIR/"
           python3 -c "import PIL" 2>/dev/null || pip install --quiet --break-system-packages pillow
           cat > make-icons.py <<'PY'
           import os, glob, sys
