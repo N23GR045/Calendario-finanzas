@@ -4,7 +4,7 @@ name: Generar APK
 on:
   workflow_dispatch:
   push:
-    branches: [main, master]
+    branches: [main, master, turnos-movil]
 
 permissions:
   contents: write
@@ -50,7 +50,8 @@ jobs:
               "@capacitor/core": "^8.0.0",
               "@capacitor/local-notifications": "8.0.0",
               "@capacitor/filesystem": "8.0.0",
-              "@capacitor/share": "8.0.0"
+              "@capacitor/share": "8.0.0",
+              "@ebarooni/capacitor-calendar": "8.11.0"
             },
             "devDependencies": {
               "@capacitor/cli": "^8.0.0"
@@ -82,7 +83,9 @@ jobs:
             'android.permission.SCHEDULE_EXACT_ALARM',
             'android.permission.RECEIVE_BOOT_COMPLETED',
             'android.permission.VIBRATE',
-            'android.permission.WAKE_LOCK'
+            'android.permission.WAKE_LOCK',
+            'android.permission.READ_CALENDAR',
+            'android.permission.WRITE_CALENDAR'
           ];
           x = x.replace(/android:allowBackup="true"/, 'android:allowBackup="false"');
           const miss = perms.filter(p => !x.includes('"' + p + '"'));
@@ -201,9 +204,18 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "apk-${{ github.run_number }}" Mi-Calendario.apk \
-            --title "Mi Calendario · versión ${{ github.run_number }}" \
-            --notes "APK listo para instalar en Android." --latest
+          if [ "$GITHUB_REF_NAME" = "main" ] || [ "$GITHUB_REF_NAME" = "master" ]; then
+            gh release create "apk-${{ github.run_number }}" Mi-Calendario.apk \
+              --target "$GITHUB_SHA" \
+              --title "Mi Calendario · versión ${{ github.run_number }}" \
+              --notes "APK listo para instalar en Android." --latest
+          else
+            # Ramas de prueba: versión previa que no sustituye a la principal
+            gh release create "prueba-$GITHUB_REF_NAME-${{ github.run_number }}" Mi-Calendario.apk \
+              --target "$GITHUB_SHA" --prerelease \
+              --title "Prueba ($GITHUB_REF_NAME) · versión ${{ github.run_number }}" \
+              --notes "APK de prueba de la rama $GITHUB_REF_NAME. Se instala encima de tu app sin perder los datos."
+          fi
 
       - name: Resumen
         if: success()

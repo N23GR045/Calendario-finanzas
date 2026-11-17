@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: blob:; font-src 'self' data: https://fonts.gstatic.com; connect-src 'self' https: http://localhost data: blob:; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
 <meta name="theme-color" content="#C42F2F">
 <script>
-var APP_VER=2026102102,APP_NAME='1.12.0';
+var APP_VER=2026111702,APP_NAME='1.13.0';
 /* Actualización desde GitHub: si hay una versión descargada más nueva que la del APK, se carga en su lugar. */
 (function(){try{var r=localStorage.getItem('wcal_upd');if(!r)return;var u=JSON.parse(r);
   if(!u||!u.html||!(u.v>=APP_VER)){localStorage.removeItem('wcal_upd');return}
@@ -16,7 +16,7 @@ var APP_VER=2026102102,APP_NAME='1.12.0';
   localStorage.setItem('wcal_try',String(u.v));window.__upd=u.v;
   window.__updHTML=u.html}catch(e){}})();
 </script>
-<script type="application/json" id="cl">[{"v":"1.12.0","d":"2026-10-21","level":"minor","items":[{"k":"new","es":"Avisos rehechos: una lista con interruptor por aviso y una pantalla de ajustes para cada uno","en":"Rebuilt alerts: a list with a switch per alert and its own settings screen"},{"k":"new","es":"Avisos nuevos: víspera del turno, resumen semanal y cierre de mes","en":"New alerts: night before your shift, weekly summary and month-end"},{"k":"new","es":"Avisos de inicio y fin de descanso","en":"Break start and break end alerts"},{"k":"new","es":"Horas silenciosas: los avisos informativos llegan sin sonido ni vibración","en":"Quiet hours: informational alerts arrive without sound or vibration"},{"k":"new","es":"Botón para probar cada aviso por separado","en":"A button to test each alert on its own"}]},{"v":"1.11.0","d":"2026-10-21","level":"minor","items":[{"k":"new","es":"Menú de Ajustes rehecho: lista por grupos con buscador y una pantalla por apartado","en":"Rebuilt Settings menu: grouped list with search and one screen per section"},{"k":"new","es":"Actualizaciones en pasos: detecta, descarga con progreso y reintentos, e instala ahora o al abrir la app","en":"Step-by-step updates: detect, download with progress and retries, install now or when the app opens"},{"k":"new","es":"Avisos por urgencia: punto, banner, ventana destacada y bloqueante, con tope de aplazamientos","en":"Notices by urgency: dot, banner, highlighted window and blocking, with a snooze limit"},{"k":"new","es":"Buscador y filtros en el historial de novedades","en":"Search and filters in the what's-new history"},{"k":"perf","es":"Comprobar actualizaciones pesa unos 32 KB en lugar de 385 KB","en":"Checking for updates now weighs about 32 KB instead of 385 KB"}]},{"v":"1.10.0","d":"2026-10-19","items":[{"k":"new","es":"Pantalla de actualizaciones renovada: estado, historial por categorías y botón para buscar","en":"Redesigned updates screen: status, history by category and a check button"},{"k":"new","es":"Aviso de versión nueva en el calendario, con «Actualizar ahora», «Ver novedades» y «Más tarde»","en":"New-version notice on the calendar with Update now, What's new and Later"},{"k":"new","es":"Barra de progreso al instalar y resumen de novedades al terminar","en":"Progress bar while installing and a summary of what's new when done"},{"k":"perf","es":"Las actualizaciones importantes se avisan con una ventana destacada","en":"Important updates are announced in a highlighted window"}],"level":"minor"},{"v":"1.9.2","d":"2026-10-17","items":[{"k":"sec","es":"Un nombre de categoría o un id manipulado ya no puede ejecutar código","en":"A tampered category id can no longer run code"},{"k":"sec","es":"Las copias de seguridad se validan y tienen límite de tamaño","en":"Backups are validated and size-limited"},{"k":"sec","es":"Política de seguridad de contenido y límites al importar calendarios .ics","en":"Content security policy and limits when importing .ics calendars"},{"k":"sec","es":"Android deja de incluir tus datos en las copias automáticas (a partir del próximo APK)","en":"Android stops including your data in automatic backups (from the next APK)"}],"level":"security"},{"v":"1.9.1","d":"2026-10-17","items":[{"k":"new","es":"Ocultar importes con el ojo del calendario o desde Apariencia","en":"Hide amounts with the calendar eye or from Appearance"}],"level":"minor"},{"v":"1.9.0","d":"2026-10-17","items":[{"k":"new","es":"Asistente de bienvenida en tres pasos: turno, sueldo y avisos","en":"Three-step welcome wizard: shift, pay and reminders"},{"k":"new","es":"Mes de ejemplo para probar la app antes de poner tus datos","en":"Sample month to try the app before adding your data"},{"k":"new","es":"Modo «Marcar varios días» tocando o arrastrando","en":"“Mark several days” mode by tapping or dragging"}],"level":"minor"},{"v":"1.8.4","d":"2026-10-17","items":[{"k":"new","es":"Licencia MIT","en":"MIT license"},{"k":"perf","es":"«Partidas» en lugar de «porciones» en el reparto del sueldo","en":"“Allocations” instead of “portions” in the pay split"}],"level":"minor"},{"v":"1.8.2","d":"2026-10-14","items":[{"k":"new","es":"Idioma rumano y aviso de actualizaciones","en":"Romanian language and update notices"},{"k":"perf","es":"Ajustes más claros, buscador de festivos y editor de categorías con colores rápidos","en":"Clearer Settings, holiday finder and category editor with quick colors"}],"level":"minor"},{"v":"1.6.0","d":"2026-10-12","items":[{"k":"new","es":"Copia de seguridad como archivo o texto comprimido","en":"Backup as a file or compressed text"}],"level":"minor"},{"v":"1.5.0","d":"2026-10-12","items":[{"k":"new","es":"Ingresos extra en Finanzas","en":"Extra income in Finances"}],"level":"minor"},{"v":"1.4.1","d":"2026-10-12","items":[{"k":"new","es":"Seis idiomas, 50 monedas y nuevo selector con banderas","en":"Six languages, 50 currencies and a new picker with flags"}],"level":"minor"}]</script>
+<script type="application/json" id="cl">[{"v":"1.13.0","d":"2026-11-17","level":"minor","items":[{"k":"new","es":"Opción para copiar tus turnos al calendario del móvil (y a Google Calendar). El sueldo y los gastos no salen del móvil","en":"Option to copy your shifts to your phone calendar (and Google Calendar). Pay and expenses never leave your phone"}]},{"v":"1.12.0","d":"2026-10-21","level":"minor","items":[{"k":"new","es":"Avisos rehechos: una lista con interruptor por aviso y una pantalla de ajustes para cada uno","en":"Rebuilt alerts: a list with a switch per alert and its own settings screen"},{"k":"new","es":"Avisos nuevos: víspera del turno, resumen semanal y cierre de mes","en":"New alerts: night before your shift, weekly summary and month-end"},{"k":"new","es":"Avisos de inicio y fin de descanso","en":"Break start and break end alerts"},{"k":"new","es":"Horas silenciosas: los avisos informativos llegan sin sonido ni vibración","en":"Quiet hours: informational alerts arrive without sound or vibration"},{"k":"new","es":"Botón para probar cada aviso por separado","en":"A button to test each alert on its own"}]},{"v":"1.11.0","d":"2026-10-21","level":"minor","items":[{"k":"new","es":"Menú de Ajustes rehecho: lista por grupos con buscador y una pantalla por apartado","en":"Rebuilt Settings menu: grouped list with search and one screen per section"},{"k":"new","es":"Actualizaciones en pasos: detecta, descarga con progreso y reintentos, e instala ahora o al abrir la app","en":"Step-by-step updates: detect, download with progress and retries, install now or when the app opens"},{"k":"new","es":"Avisos por urgencia: punto, banner, ventana destacada y bloqueante, con tope de aplazamientos","en":"Notices by urgency: dot, banner, highlighted window and blocking, with a snooze limit"},{"k":"new","es":"Buscador y filtros en el historial de novedades","en":"Search and filters in the what's-new history"},{"k":"perf","es":"Comprobar actualizaciones pesa unos 32 KB en lugar de 385 KB","en":"Checking for updates now weighs about 32 KB instead of 385 KB"}]},{"v":"1.10.0","d":"2026-10-19","items":[{"k":"new","es":"Pantalla de actualizaciones renovada: estado, historial por categorías y botón para buscar","en":"Redesigned updates screen: status, history by category and a check button"},{"k":"new","es":"Aviso de versión nueva en el calendario, con «Actualizar ahora», «Ver novedades» y «Más tarde»","en":"New-version notice on the calendar with Update now, What's new and Later"},{"k":"new","es":"Barra de progreso al instalar y resumen de novedades al terminar","en":"Progress bar while installing and a summary of what's new when done"},{"k":"perf","es":"Las actualizaciones importantes se avisan con una ventana destacada","en":"Important updates are announced in a highlighted window"}],"level":"minor"},{"v":"1.9.2","d":"2026-10-17","items":[{"k":"sec","es":"Un nombre de categoría o un id manipulado ya no puede ejecutar código","en":"A tampered category id can no longer run code"},{"k":"sec","es":"Las copias de seguridad se validan y tienen límite de tamaño","en":"Backups are validated and size-limited"},{"k":"sec","es":"Política de seguridad de contenido y límites al importar calendarios .ics","en":"Content security policy and limits when importing .ics calendars"},{"k":"sec","es":"Android deja de incluir tus datos en las copias automáticas (a partir del próximo APK)","en":"Android stops including your data in automatic backups (from the next APK)"}],"level":"security"},{"v":"1.9.1","d":"2026-10-17","items":[{"k":"new","es":"Ocultar importes con el ojo del calendario o desde Apariencia","en":"Hide amounts with the calendar eye or from Appearance"}],"level":"minor"},{"v":"1.9.0","d":"2026-10-17","items":[{"k":"new","es":"Asistente de bienvenida en tres pasos: turno, sueldo y avisos","en":"Three-step welcome wizard: shift, pay and reminders"},{"k":"new","es":"Mes de ejemplo para probar la app antes de poner tus datos","en":"Sample month to try the app before adding your data"},{"k":"new","es":"Modo «Marcar varios días» tocando o arrastrando","en":"“Mark several days” mode by tapping or dragging"}],"level":"minor"},{"v":"1.8.4","d":"2026-10-17","items":[{"k":"new","es":"Licencia MIT","en":"MIT license"},{"k":"perf","es":"«Partidas» en lugar de «porciones» en el reparto del sueldo","en":"“Allocations” instead of “portions” in the pay split"}],"level":"minor"},{"v":"1.8.2","d":"2026-10-14","items":[{"k":"new","es":"Idioma rumano y aviso de actualizaciones","en":"Romanian language and update notices"},{"k":"perf","es":"Ajustes más claros, buscador de festivos y editor de categorías con colores rápidos","en":"Clearer Settings, holiday finder and category editor with quick colors"}],"level":"minor"},{"v":"1.6.0","d":"2026-10-12","items":[{"k":"new","es":"Copia de seguridad como archivo o texto comprimido","en":"Backup as a file or compressed text"}],"level":"minor"},{"v":"1.5.0","d":"2026-10-12","items":[{"k":"new","es":"Ingresos extra en Finanzas","en":"Extra income in Finances"}],"level":"minor"},{"v":"1.4.1","d":"2026-10-12","items":[{"k":"new","es":"Seis idiomas, 50 monedas y nuevo selector con banderas","en":"Six languages, 50 currencies and a new picker with flags"}],"level":"minor"}]</script>
 <title>Mi Calendario Laboral y Finanzas</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -591,6 +591,71 @@ function calc(prefix){
 }
 const counter=(r,f)=>f?(r.byCat[f]||0):r.days;
 
+
+/* ---------- 1.13: TURNOS AL CALENDARIO DEL MÓVIL ----------
+   Copia solo los turnos (día, tipo y horas) a la cuenta de Google del móvil para verlos en Google Calendar y en Aurora OS.
+   Nunca se copia dinero. Cada evento lleva la marca #mi-calendario-turno para poder actualizarlo o borrarlo sin tocar los demás. */
+const GCMARK='#mi-calendario-turno';let GCT=null,GCBUSY=false,GCAGAIN=false;
+function gcPl(){try{return typeof Capacitor!=='undefined'&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform()&&Capacitor.Plugins&&Capacitor.Plugins.CapacitorCalendar||null}catch(e){return null}}
+function gcSoon(ms){if(!S||!S.set||!S.set.gcOn)return;clearTimeout(GCT);GCT=setTimeout(gcSync,ms||4000)}
+async function gcCal(P){
+  const r=await P.listCalendars(),cs=(r&&r.result)||[];
+  const ok=c=>c&&c.allowsContentModifications!==false&&c.accountName&&/@/.test(c.accountName);
+  let c=cs.find(x=>String(x.id)===String(S.set.gcCal||''))&&S.set.gcCal?cs.find(x=>String(x.id)===String(S.set.gcCal)):null;
+  if(!ok(c))c=cs.find(x=>ok(x)&&x.ownerAccount===x.accountName&&/google/i.test((x.source&&x.source.type)||''))||cs.find(x=>ok(x)&&x.ownerAccount===x.accountName)||cs.find(ok);
+  if(!c){try{const d=await P.getDefaultCalendar();c=d&&d.result}catch(e){}}
+  return c?String(c.id):null;
+}
+function gcWanted(from,days){
+  const out={},hm=t=>`${pad(t.getHours())}:${pad(t.getMinutes())}`;
+  for(let i=0;i<days;i++){
+    const d=new Date(from.getFullYear(),from.getMonth(),from.getDate()+i),k=key(d.getFullYear(),d.getMonth(),d.getDate());
+    const e=getDay(k),c=e&&cat(e.cat);if(!c||c.kind==='other')continue;
+    const title=((c.icon?c.icon+' ':'')+c.name).trim();
+    let ev;
+    if(c.kind==='work'&&(e.start||c.start)){
+      const st=new Date(`${k}T${e.start||c.start}:00`),br=e.br||0,brp=e.brp!==undefined?!!e.brp:!!S.set.brPaid;
+      const en=new Date(st.getTime()+((e.hours||c.hours||0)+(brp?0:br/60))*3600000);
+      ev={title,startDate:st.getTime(),endDate:en.getTime(),isAllDay:false,info:`${hm(st)}–${hm(en)}`};
+    }else ev={title,startDate:d.getTime(),endDate:new Date(d.getFullYear(),d.getMonth(),d.getDate()+1).getTime(),isAllDay:true,info:'Todo el día'};
+    ev.color=c.color;ev.sig=[ev.title,ev.startDate,ev.endDate,ev.isAllDay?1:0,c.color].join('|');
+    ev.description=`Turno de Mi Calendario (${ev.info}).\n${GCMARK} dia=${k} color=${c.color} tipo=${c.kind} sig=${encodeURIComponent(ev.sig)}`;
+    out[k]=ev;
+  }
+  return out;
+}
+async function gcSync(){
+  const P=gcPl();if(!P||!S.set.gcOn)return;if(GCBUSY){GCAGAIN=true;return}GCBUSY=true;
+  try{
+    const calId=await gcCal(P);if(!calId){S.set.gcErr='No hay ninguna cuenta de calendario en el móvil';return}
+    S.set.gcCal=calId;
+    const t=new Date(),from=new Date(t.getFullYear(),t.getMonth(),t.getDate()-14),days=14+90;
+    const want=gcWanted(from,days);
+    const r=await P.listEventsInRange({from:from.getTime(),to:new Date(from.getFullYear(),from.getMonth(),from.getDate()+days).getTime(),calendarIds:[calId]});
+    const have={};((r&&r.result)||[]).forEach(ev=>{const m=String(ev.description||'').match(/#mi-calendario-turno dia=(\d{4}-\d\d-\d\d)[^\n]*sig=(\S+)/);if(!m)return;
+      if(have[m[1]])have['dup'+ev.id]={id:ev.id,sig:''};else have[m[1]]={id:ev.id,sig:decodeURIComponent(m[2])}});
+    for(const k in have){const w=want[k.startsWith('dup')?'':k];if(!w||w.sig!==have[k].sig){try{await P.deleteEvent({id:String(have[k].id)})}catch(e){}}}
+    for(const k in want){const w=want[k];if(have[k]&&have[k].sig===w.sig)continue;
+      try{await P.createEvent({calendarId:calId,title:w.title,startDate:w.startDate,endDate:w.endDate,isAllDay:w.isAllDay,description:w.description,alerts:[]})}catch(e){}}
+    S.set.gcAt=new Date().toISOString();S.set.gcErr='';
+  }catch(e){S.set.gcErr=String(e&&e.message||e).slice(0,120)}
+  finally{GCBUSY=false;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}if(GCAGAIN){GCAGAIN=false;gcSoon(2000)}}
+}
+async function gcToggle(on){
+  const P=gcPl();
+  if(on&&!P){S.set.gcOn=false;save();render();toast(tr('Solo en la app instalada'),tr('Esta opción funciona en el APK de Android.'));return}
+  if(on){try{const r=await P.requestFullCalendarAccess();if(r&&r.result!=='granted'){S.set.gcOn=false;save();render();toast(tr('Falta el permiso'),tr('Permite el acceso al calendario en los ajustes del móvil.'),'alert');return}}catch(e){}}
+  S.set.gcOn=on;save();render();
+  if(on){toast(tr('Copiando tus turnos'),tr('Aparecerán en el calendario del móvil en unos segundos.'));gcSync().then(render)}
+  else if(P){try{const t=new Date(),from=new Date(t.getFullYear()-1,0,1),to=new Date(t.getFullYear()+2,0,1);const r=await P.listEventsInRange({from:from.getTime(),to:to.getTime(),calendarIds:S.set.gcCal?[String(S.set.gcCal)]:undefined});
+    for(const ev of ((r&&r.result)||[]))if(String(ev.description||'').includes(GCMARK)){try{await P.deleteEvent({id:String(ev.id)})}catch(e){}}}catch(e){}toast(tr('Turnos quitados'),tr('Se han borrado del calendario del móvil.'))}
+}
+function gcRow(){
+  const s=S.set,when=s.gcAt?new Date(s.gcAt).toLocaleString(LOC,{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):'';
+  const d=s.gcOn?(s.gcErr?esc(s.gcErr):(when?tr('Copiados')+' · '+when:tr('Copiando…'))):tr('Para verlos en Google Calendar y en Aurora OS. El sueldo y los gastos no salen del móvil');
+  return srow(tr('Copiar turnos al calendario del móvil'),d,swc(!!s.gcOn,'gcToggle(this.checked)'));
+}
+
 /* ---------- VISTAS ---------- */
 function go(v){const o=['cal','fin','sum','set'],d=o.indexOf(v)-o.indexOf(S.view);if(SUB&&!(S.open&&Object.keys(S.open).some(k=>S.open[k]&&SB[k]))){SUB=null;try{history.state&&history.state.sub&&history.go(NSEL?-2:-1)}catch(e){}NSEL=null}S.view=v;save();render(d>0?'a-r':d<0?'a-l':'a-in');$('#main').scrollTop=0}
 function nav(d){let[y,m]=S.ym;m+=d;if(m<0){m=11;y--}if(m>11){m=0;y++}S.ym=[y,m];save();render(d>0?'m-r':'m-l')}
@@ -761,6 +826,7 @@ function tick(){
   if(ch)save();
 }
 async function syncNative(){
+  gcSoon();
   const LN=native();if(!LN)return;
   try{
     const p=await LN.getPending();
@@ -1193,7 +1259,7 @@ function bkAge(){const l=S.set.lastBk;if(!l)return 'Aún no has hecho ninguna';c
 function dataCard(){
   const n=bkList().length,old=Object.keys(S.days||{}).length>0&&(!S.set.lastBk||Date.now()-new Date(S.set.lastBk)>30*864e5);
   return sec('dat','Datos',old?'Conviene hacer una copia de seguridad':'Copia de seguridad, borrar o restablecer',
-    srow('Copia de seguridad',bkAge()+'. Guarda todos tus datos en un texto o archivo','<button class="btn" style="padding:8px 14px" onclick="bkSave()">Guardar</button>')
+    gcRow()+srow('Copia de seguridad',bkAge()+'. Guarda todos tus datos en un texto o archivo','<button class="btn" style="padding:8px 14px" onclick="bkSave()">Guardar</button>')
     +srow('Restaurar copia','Desde un texto o un archivo guardado','<button class="btn g" style="padding:8px 14px" onclick="bkAsk()">Restaurar</button>')
     +srow('Copias automáticas',n?`${n} guardadas en el móvil (1 al día)`:'Se hace una cada día','<button class="btn g" style="padding:8px 14px" onclick="bkAuto()"'+(n?'':' disabled')+'>Ver</button>')
     +'<div class="sh">Zona delicada</div>'+srow('Borrar registros','Elimina todos los días y notas marcados','<button class="btn g" style="padding:8px 14px" onclick="askClear()">Borrar</button>')
@@ -1865,7 +1931,7 @@ function tpOk(){const i=TPI;if(i){i.value=tp2(TPH)+':'+tp2(TPM);i.dispatchEvent(
   document.addEventListener('focusin',e=>{const i=T(e);if(i){i.readOnly=true;i.blur()}},true)})();
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(TPI)tpClose();else if($('#ov').classList.contains('on'))closeSheet()}});
 
-setInterval(tick,30000);document.addEventListener('visibilitychange',()=>{if(!document.hidden){onResume();bkAutoRun()}});tick();
+setInterval(tick,30000);document.addEventListener('visibilitychange',()=>{if(!document.hidden){onResume();bkAutoRun();gcSoon(1500)}});tick();
 try{const AP=typeof Capacitor!=='undefined'&&Capacitor.Plugins&&Capacitor.Plugins.App;if(AP&&AP.addListener)AP.addListener('resume',onResume)}catch(e){}
 try{const LN0=native();if(LN0&&LN0.addListener)LN0.addListener('localNotificationActionPerformed',e=>{try{const x=e&&e.notification&&e.notification.extra;if(x&&x.go==='upd'){S.open={upd:true};go('set');updGo()}}catch(_){}})}catch(e){}
 </script>
