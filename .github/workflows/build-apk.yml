@@ -198,9 +198,24 @@ jobs:
           if [ -z "$CLAVE_B64" ]; then echo "::error::Falta el secreto CLAVE_B64 (Settings > Secrets and variables > Actions)"; exit 1; fi
           mkdir -p ~/.android
           echo "$CLAVE_B64" | base64 -d > ~/.android/debug.keystore
+          cp ~/.android/debug.keystore "$GITHUB_WORKSPACE/firma.keystore"
+          echo "Clave que se va a usar:"
+          keytool -list -keystore "$GITHUB_WORKSPACE/firma.keystore" -storepass android | tee -a "$GITHUB_WORKSPACE/log.txt"
+          # Firmar SIEMPRE con esa clave (antes Gradle generaba una nueva en cada compilación y los APK no se instalaban encima)
+          cat >> android/app/build.gradle <<'GRADLE'
+
+          android.signingConfigs.debug {
+              storeFile file(System.getenv("FIRMA_KEYSTORE"))
+              storePassword "android"
+              keyAlias "androiddebugkey"
+              keyPassword "android"
+          }
+          GRADLE
 
       - name: Compilar el APK
         working-directory: android
+        env:
+          FIRMA_KEYSTORE: ${{ github.workspace }}/firma.keystore
         run: ./gradlew assembleDebug --console=plain 2>&1 | tee -a "$GITHUB_WORKSPACE/log.txt"
 
       - name: Guardar el APK
