@@ -108,8 +108,9 @@ public class CalSyncPlugin extends Plugin {
 
         // Eventos que ya creó la app en ese calendario
         Map<String, long[]> have = new HashMap<>(); // uid -> [id, dtstart, dtend, allDay]
+        Map<String, Integer> haveCol = new HashMap<>();
         Map<String, String[]> haveTxt = new HashMap<>(); // uid -> [title, desc]
-        String[] proj = { Events._ID, Events.CUSTOM_APP_URI, Events.DTSTART, Events.DTEND, Events.ALL_DAY, Events.TITLE, Events.DESCRIPTION };
+        String[] proj = { Events._ID, Events.CUSTOM_APP_URI, Events.DTSTART, Events.DTEND, Events.ALL_DAY, Events.TITLE, Events.DESCRIPTION, Events.EVENT_COLOR };
         try (Cursor c = cr.query(Events.CONTENT_URI, proj,
                 Events.CALENDAR_ID + "=? AND " + Events.CUSTOM_APP_PACKAGE + "=? AND " + Events.DELETED + "=0",
                 new String[] { String.valueOf(calId), pkg }, null)) {
@@ -119,6 +120,7 @@ public class CalSyncPlugin extends Plugin {
                 String uid = uri.substring(SCHEME.length());
                 have.put(uid, new long[] { c.getLong(0), c.getLong(2), c.getLong(3), c.getInt(4) });
                 haveTxt.put(uid, new String[] { c.getString(5), c.getString(6) });
+                haveCol.put(uid, c.isNull(7) ? 0 : c.getInt(7));
             }
         }
 
@@ -133,11 +135,13 @@ public class CalSyncPlugin extends Plugin {
             long s = e.getLong("s"), en = e.getLong("e");
             String title = e.optString("title", "");
             String desc = e.optString("desc", "");
+            int color = e.optInt("color", 0);
             long[] h = have.get(uid);
             if (h != null) {
                 String[] t = haveTxt.get(uid);
                 boolean same = h[1] == s && h[2] == en && (h[3] == 1) == all
-                    && title.equals(t[0] == null ? "" : t[0]) && desc.equals(t[1] == null ? "" : t[1]);
+                    && title.equals(t[0] == null ? "" : t[0]) && desc.equals(t[1] == null ? "" : t[1])
+                    && (color == 0 || color == haveCol.get(uid));
                 if (same) continue;
             }
             ContentValues v = new ContentValues();
@@ -146,6 +150,7 @@ public class CalSyncPlugin extends Plugin {
             v.put(Events.DESCRIPTION, desc);
             v.put(Events.DTSTART, s);
             v.put(Events.DTEND, en);
+            if (color != 0) v.put(Events.EVENT_COLOR, color);
             v.put(Events.ALL_DAY, all ? 1 : 0);
             v.put(Events.EVENT_TIMEZONE, all ? "UTC" : tz);
             v.put(Events.AVAILABILITY, all ? Events.AVAILABILITY_FREE : Events.AVAILABILITY_BUSY);
