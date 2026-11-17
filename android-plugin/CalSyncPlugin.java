@@ -98,27 +98,78 @@ public class CalSyncPlugin extends Plugin {
         }).start();
     }
 
+    private static final String ACC = "Mis turnos";
+
+    private Uri adapter(Uri u) {
+        return u.buildUpon()
+            .appendQueryParameter(CalendarContract.CALLER_IS_SYNCADAPTER, "true")
+            .appendQueryParameter(Calendars.ACCOUNT_NAME, ACC)
+            .appendQueryParameter(Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL)
+            .build();
+    }
+
+    /** Calendario local (uno por tipo de día) con su propio color: Samsung solo pinta por calendario. */
+    private long ensureLocalCal(String key, String name, int color) {
+        android.content.ContentResolver cr = getContext().getContentResolver();
+        try (Cursor c = cr.query(Calendars.CONTENT_URI, new String[] { Calendars._ID, Calendars.CALENDAR_COLOR },
+                Calendars.ACCOUNT_TYPE + "=? AND " + Calendars.ACCOUNT_NAME + "=? AND " + Calendars.NAME + "=?",
+                new String[] { CalendarContract.ACCOUNT_TYPE_LOCAL, ACC, key }, null)) {
+            if (c != null && c.moveToFirst()) {
+                long id = c.getLong(0);
+                if (c.getInt(1) != color) {
+                    ContentValues v = new ContentValues();
+                    v.put(Calendars.CALENDAR_COLOR, color);
+                    v.put(Calendars.CALENDAR_DISPLAY_NAME, name);
+                    cr.update(adapter(ContentUris.withAppendedId(Calendars.CONTENT_URI, id)), v, null, null);
+                }
+                return id;
+            }
+        }
+        ContentValues v = new ContentValues();
+        v.put(Calendars.ACCOUNT_NAME, ACC);
+        v.put(Calendars.ACCOUNT_TYPE, CalendarContract.ACCOUNT_TYPE_LOCAL);
+        v.put(Calendars.NAME, key);
+        v.put(Calendars.CALENDAR_DISPLAY_NAME, name);
+        v.put(Calendars.CALENDAR_COLOR, color);
+        v.put(Calendars.CALENDAR_ACCESS_LEVEL, Calendars.CAL_ACCESS_OWNER);
+        v.put(Calendars.OWNER_ACCOUNT, ACC);
+        v.put(Calendars.VISIBLE, 1);
+        v.put(Calendars.SYNC_EVENTS, 1);
+        Uri u = cr.insert(adapter(Calendars.CONTENT_URI), v);
+        return ContentUris.parseId(u);
+    }
+
     private JSObject doSync(PluginCall call) throws Exception {
-        long calId = call.getData().getLong("calId");
-        long from = call.getData().getLong("from");
-        long to = call.getData().getLong("to");
-        JSONArray evs = call.getData().getJSONArray("events");
+        JSONObject data = call.getData();
+        long single = data.optLong("calId", 0);
+        long from = data.getLong("from");
+        long to = data.getLong("to");
+        JSONArray evs = data.getJSONArray("events");
+        JSONArray types = data.optJSONArray("types");
         String pkg = getContext().getPackageName();
         android.content.ContentResolver cr = getContext().getContentResolver();
 
-        // Eventos que ya creó la app en ese calendario
-        Map<String, long[]> have = new HashMap<>(); // uid -> [id, dtstart, dtend, allDay]
+        Map<String, Long> typeCal = new HashMap<>();
+        if (types != null) {
+            for (int i = 0; i < types.length(); i++) {
+                JSONObject t = types.getJSONObject(i);
+                typeCal.put(t.getString("key"), ensureLocalCal(t.getString("key"), t.getString("name"), t.getInt("color")));
+            }
+        }
+
+        // Eventos que ya creó la app (en cualquier calendario)
+        Map<String, long[]> have = new HashMap<>(); // uid -> [id, dtstart, dtend, allDay, calId]
+        Map<String, String[]> haveTxt = new HashMap<>();
         Map<String, Integer> haveCol = new HashMap<>();
-        Map<String, String[]> haveTxt = new HashMap<>(); // uid -> [title, desc]
-        String[] proj = { Events._ID, Events.CUSTOM_APP_URI, Events.DTSTART, Events.DTEND, Events.ALL_DAY, Events.TITLE, Events.DESCRIPTION, Events.EVENT_COLOR };
+        String[] proj = { Events._ID, Events.CUSTOM_APP_URI, Events.DTSTART, Events.DTEND, Events.ALL_DAY, Events.TITLE, Events.DESCRIPTION, Events.EVENT_COLOR, Events.CALENDAR_ID };
         try (Cursor c = cr.query(Events.CONTENT_URI, proj,
-                Events.CALENDAR_ID + "=? AND " + Events.CUSTOM_APP_PACKAGE + "=? AND " + Events.DELETED + "=0",
-                new String[] { String.valueOf(calId), pkg }, null)) {
+                Events.CUSTOM_APP_PACKAGE + "=? AND " + Events.DELETED + "=0",
+                new String[] { pkg }, null)) {
             while (c != null && c.moveToNext()) {
                 String uri = c.getString(1);
                 if (uri == null || !uri.startsWith(SCHEME)) continue;
                 String uid = uri.substring(SCHEME.length());
-                have.put(uid, new long[] { c.getLong(0), c.getLong(2), c.getLong(3), c.getInt(4) });
+                have.put(uid, new long[] { c.getLong(0), c.getLong(2), c.getLong(3), c.getInt(4), c.getLong(8) });
                 haveTxt.put(uid, new String[] { c.getString(5), c.getString(6) });
                 haveCol.put(uid, c.isNull(7) ? 0 : c.getInt(7));
             }
@@ -131,13 +182,16 @@ public class CalSyncPlugin extends Plugin {
             JSONObject e = evs.getJSONObject(i);
             String uid = e.getString("uid");
             seen.add(uid);
+            long target = types != null ? (typeCal.containsKey(e.optString("type")) ? typeCal.get(e.optString("type")) : 0) : single;
+            if (target == 0) continue;
             boolean all = e.optBoolean("allDay", false);
             long s = e.getLong("s"), en = e.getLong("e");
             String title = e.optString("title", "");
             String desc = e.optString("desc", "");
             int color = e.optInt("color", 0);
             long[] h = have.get(uid);
-            if (h != null) {
+            boolean moveCal = h != null && h[4] != target;
+            if (h != null && !moveCal) {
                 String[] t = haveTxt.get(uid);
                 boolean same = h[1] == s && h[2] == en && (h[3] == 1) == all
                     && title.equals(t[0] == null ? "" : t[0]) && desc.equals(t[1] == null ? "" : t[1])
@@ -145,7 +199,7 @@ public class CalSyncPlugin extends Plugin {
                 if (same) continue;
             }
             ContentValues v = new ContentValues();
-            v.put(Events.CALENDAR_ID, calId);
+            v.put(Events.CALENDAR_ID, target);
             v.put(Events.TITLE, title);
             v.put(Events.DESCRIPTION, desc);
             v.put(Events.DTSTART, s);
@@ -154,14 +208,15 @@ public class CalSyncPlugin extends Plugin {
             v.put(Events.ALL_DAY, all ? 1 : 0);
             v.put(Events.EVENT_TIMEZONE, all ? "UTC" : tz);
             v.put(Events.AVAILABILITY, all ? Events.AVAILABILITY_FREE : Events.AVAILABILITY_BUSY);
-            if (h != null) {
+            if (h != null && !moveCal) {
                 cr.update(ContentUris.withAppendedId(Events.CONTENT_URI, h[0]), v, null, null);
                 updated++;
             } else {
+                if (moveCal) cr.delete(ContentUris.withAppendedId(Events.CONTENT_URI, h[0]), null, null);
                 v.put(Events.CUSTOM_APP_PACKAGE, pkg);
                 v.put(Events.CUSTOM_APP_URI, SCHEME + uid);
                 cr.insert(Events.CONTENT_URI, v);
-                added++;
+                if (moveCal) updated++; else added++;
             }
         }
         // Quitar los que ya no existen en la app (solo dentro del periodo sincronizado)
@@ -185,6 +240,9 @@ public class CalSyncPlugin extends Plugin {
         if (!ok(call)) return;
         int n = getContext().getContentResolver().delete(Events.CONTENT_URI,
             Events.CUSTOM_APP_PACKAGE + "=?", new String[] { getContext().getPackageName() });
+        getContext().getContentResolver().delete(adapter(Calendars.CONTENT_URI),
+            Calendars.ACCOUNT_NAME + "=? AND " + Calendars.ACCOUNT_TYPE + "=?",
+            new String[] { ACC, CalendarContract.ACCOUNT_TYPE_LOCAL });
         JSObject r = new JSObject();
         r.put("removed", n);
         call.resolve(r);
